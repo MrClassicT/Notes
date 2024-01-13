@@ -566,7 +566,7 @@ Binary Large Object (BLOB) storage is meestal een gepastere manier om foto's te 
 
 ```cs
 // Index component
-[Parameter, SupplyParemeterFromQuery]
+[Parameter, SupplyParameterFromQuery]
 public string? Searchterm {get; set;}
 ```
 
