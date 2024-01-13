@@ -1,10 +1,4 @@
----
-tags:
-  - CSharp
-date: 2023-11-07
-topic:
-  - Csharp
----
+# Cs Samenvatting
 - [[#Notes|Notes]]
 		- [[#Access modifiers|Access modifiers]]
 		- [[#Variables|Variables]]
