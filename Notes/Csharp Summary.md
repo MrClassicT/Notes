@@ -159,7 +159,7 @@ Voordeel? - > Count en IsReadOnly methodes.
     - RemoveAt(int index): void
 
 #### Collection interfaces
-![[Csharp_collection_Interfaces.png]]
+![Csharp_collection_Interfaces.png](../src/Csharp_collection_Interfaces.png)
 
 ---
 
@@ -203,7 +203,7 @@ One Test class per unit.
 - **\[Theory\]** => Data driven test (multiple cases at once)
 	- **\[InlineData( \/\* input \*\/  )\]** => To give a parameter
 		- Example:
-		  ```csharp
+```csharp
 public class BankAccountTest{
 
 [Theory]
@@ -218,9 +218,12 @@ public void NewAccount_WrongAccountNumber_Fails(string accountNumber)
   }
 }
 ```
-	- **\[MemberData(nameof( \/\* field \*\/))\]**
-		- Example:
-		```csharp
+
+
+- **\[MemberData(nameof( \/\* field \*\/))\]**
+	- Example:
+
+```csharp
 public class BankAccountTest{
 
   public static IEnumerable<object[]> TestData{
@@ -666,7 +669,8 @@ var uri = NavigationManager.GetUriWithQueryParameters(parameters);
 
 NavigationManager.NavigateTo(uri);
 
-}```
+}
+```
 
 
 - [Shopping cart](https://hogent-web.github.io/csharp/chapters/08/slides/index.html#46)
@@ -760,7 +764,7 @@ builder.Services.AddDbContext<BogusDbContext>();
 ```
 
 ## [Triggers](https://hogent-web.github.io/csharp/chapters/09/slides/index.html#27)
-![[Cs_Triggers.png]]
+![Cs_Triggers](../src/Cs_Triggers.png)
 
 
 ## Effectieve db gebruiken (sqlserver)
@@ -774,7 +778,7 @@ builder.Services.AddDbContext<BogusDbContext>(options =>{
 })
 ```
 
-```
+```cs
 {
 
 	"ConnectionStrings": {
@@ -865,7 +869,7 @@ class EntityConfiguration<T> : IEntityTypeConfiguration<T> where T : Entity
 
 - IsConcurrencyToken() : Configures whether this property should be used as a concurrency token. When a property is configured as a concurrency token the value in the database will be checked when an instance of this entity type is updated or deleted during [SaveChanges()](https://learn.microsoft.com/en-us/dotnet/api/microsoft.entityframeworkcore.dbcontext.savechanges?view=efcore-8.0#microsoft-entityframeworkcore-dbcontext-savechanges) to ensure it has not changed since the instance was retrieved from the database. If it has changed, an exception will be thrown and the changes will not be applied to the database.
 
-![[Cs_Configurations.png]]
+![Cs_Configurations.png](../src/Cs_Configurations.png)
 - Voor elke EntityConfiguration klasse moet dit aangepast worden indien we gebruik maken van een eigen EntityConfiguration klasse voor deze entiteit.
 
 ### Column name aanpassen (change column name)
@@ -886,7 +890,7 @@ internal class ProductConfiguration : EntityConfiguration<Product>
 
 #### OwnsOne / OwnsMany VS HasOne/HasMany
 OwnsOne/-Many mag enkel gebruikt worden voor ValueObjects om het object op te slaan bij de Entiteit waartoe het behoort.
-![[Cs_OwnsVsHas.png]]
+![Cs_OwnsVsHas.png](../src/Cs_OwnsVsHas.png)
 
 ### Ervoor zorgen dat alles mapped is.
 
@@ -953,7 +957,7 @@ var blogs = context.Blogs.AsNoTracking().ToList();
 	.ThenInclude(post => post.Author)
 	.ThenInclude(author => author.Photo)
 	.ToList();
-```
+	```
 - Explicit Loading (niet te kennen)
 	- Data wordt expliciet op een later tijdstip geladen.
 	- Zelden gebruikt.
@@ -1242,7 +1246,7 @@ dotnet add .\Domain.Tests\Domain.Tests.csproj reference ..\src\Domain\Domain.csp
 ```
 
 Playwright commands
-![[Cs_Playwright_commands.png]]![[Cs_Playwright_Commands_2.png]]
+![Cs_Playwright_commands.png](../src/Cs_Playwright_commands.png)![Cs_Playwright_Commands_2.png](../src/Cs_Playwright_Commands_2.png)
 
 Run serverproj. app: `dotnet run`
 Run tests (from test folder): `dotnet test`
