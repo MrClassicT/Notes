@@ -1,1 +1,3 @@
-# [C# samenvatting!](https://github.com/MrClassicT/Notes/blob/main/Notes/Csharp%20Summary.md)
+# [C# samenvatting!](/C#/Notes/Csharp%20Summary.md)
+
+# More to come? :)
