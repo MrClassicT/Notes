@@ -671,8 +671,119 @@ NavigationManager.NavigateTo(uri);
 
 }
 ```
+---
+## Toegepast op vb. examen
+### Client
+#### Stap 1: Code behind van de index.razor
+Index.razor.cs
+
+```cs
+// Index.razor.cs
+namespace Client.Materials
+{
+	public partial class Index
+	{
+		private IEnumerable<MaterialDto.Index> materials;
+		[Inject] public IMaterialService MaterialService { get; set; }
+		private string _searchterm; // 👈 Added
+		
+		protected override Task OnInitializedAsync()
+		{
+			return GetMaterialsAsync();
+		}
+		private async Task GetMaterialsAsync()
+		{
+			materials = await 
+			MaterialService.GetIndexAsync(_searchterm); // 👈 Added the _searchterm as parameter instead of 'null'.
+		}
+	}
+}
+```
+
+#### Stap 2: Index zelf aanpassen
+In de Index.razor moeten we nog gebruik maken van onze variabele, `bind-value`!
+
+```cs
+// Index.razor
+
+// Some code here
+<input @bind-value="_searchterm" placeholder="search"></input> // 👈 Added the bind-value.
+
+// Some more other code here
+<button @onclick="GetMaterialsAsync" /* ... */>Search</button> // 👈 Added onclick value with the method containing what must happen upon clicking.
+```
+
+#### Stap 3: Service van de client
+Hier moeten we ervoor zorgen dat de end point goed geüpdatet wordt.
+```cs
+// Client/Materials/MaterialService.cs
+// Code ...
+public async Task<IEnumerable<MaterialDto.Index>> GetIndexAsync(string searchTerm)
+{
+	var materials = await http
+	.GetFromJsonAsync<IEnumerable<MaterialDto.Index>>($"{endpoint}?{nameof(searchTerm)}={HttpUtility.UrlEncode(searchTerm)}"); // 👈 Add searchTerm to url.
+
+	return materials;
+}
+```
+
+### Server
+#### Stap 4: Controller aanpassen
+```cs
+// MaterialController.cs
+namespace Server.Controllers
+{
+	[ApiController]
+	[Route("api/[controller]")]
+	public class MaterialController : ControllerBase
+	{
+		private readonly IMaterialService materialService;
+		
+		public MaterialController(IMaterialService
+		 materialService)
+		{
+			this.materialService = materialService;
+		}
+	
+  
+
+	[HttpGet]
+	public Task<IEnumerable<MaterialDto.Index>> 
+	GetIndex([FromQuery] string searchTerm) // 👈 searchTerm added; merk op: geschreven zoals bij url.
+	{
+		return materialService.GetIndexAsync(searchTerm); // 👈 Added searchTerm bij het opzoeken.
+	}
+}
+}
+```
+
+### Service laag
+#### Stap 5: Effectieve service aanpassen. (in service laag)
+```cs
+public async Task<IEnumerable<MaterialDto.Index>> GetIndexAsync(string searchTerm) // 👈 Zorg ervoor dat je de searchTerm door krijgt.
+{
+	var query = dbContext.Materials.Select(x => new MaterialDto.Index
+	{
+		Id = x.Id,
+		Name = x.Name,
+		Description = x.Description,
+		InStock = x.InStock
+	}); // 👈 Query to get everything.
+
+	if (!String.IsNullOrEmpty(searchTerm)) // 👈 Incase there's a searchTerm, we want to filter the items getting them.
+	{
+		query = query.Where(m =>
+		m.Description.ToLower().Contains(searchTerm.ToLower()) |
+		m.Name.ToLower().StartsWith(searchTerm.ToLower())
+		).OrderBy(m => m.Name); // 👈 the .Where() specifies te filter.
+	}
+	return await query.ToListAsync(); // 👈 we return the resultset in an Async List.
+ }
+```
 
 
+
+---
 - [Shopping cart](https://hogent-web.github.io/csharp/chapters/08/slides/index.html#46)
 
 ---
