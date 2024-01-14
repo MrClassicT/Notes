@@ -375,7 +375,172 @@ else
 ```
 
 > Recommended exercise: [Blackjack](https://github.com/HOGENT-Web/csharp-ch-6-exercise-1)
+---
 
+## Vb examen: Create functie implementatie.
+> Deeltje van validation zit hier ook bij. :)
+### Client
+#### Stap 1: Create pagina: Create.razor
+```cs
+<EditForm Model="_index" OnValidSubmit="CreateMaterialAsync"> // 👈 Added EditForm around the fields to create a proper form.
+    <FluentValidationValidator/> // <- FluentValidation added. This is necessary.
+    <div class="field">
+        <label class="label">Name</label>
+        <div class="control">
+            <InputText @bind-Value="_index.Name" class="input"/>// 👈 Input becomes InputText, because that's how it's supposed to be.
+            <ValidationMessage For="() => _index.Name"></ValidationMessage> // <- FluentValidation; added validation for the name.
+        </div>
+    </div>
+
+    <div class="field">
+        <label class="label">Description</label>
+        <div class="control">
+            <InputTextArea @bind-Value="_index.Description" rows="5" class="textarea"></InputTextArea> // 👈 Textfield becomes an InputTextArea.
+            <ValidationMessage For="() => _index.Description"></ValidationMessage> // <- FluentValidation; added validation for the Description.
+        </div>
+    </div>
+// No need to change anything to the button.
+    <div class="buttons">
+        <button class="button is-link is-fullwidth" type="submit">Create</button>
+        <a href="/" class="button is-link is-light is-fullwidth">Cancel</a>
+    </div>
+</EditForm>
+```
+
+#### Stap 2: Code behind van de Create pagina.
+```cs
+public partial class Create
+
+{
+	private MaterialDto.Create _index = new(); // 👈 Added, the model we need to use on the Create page.
+	
+	[Inject] public IMaterialService ms { get; set; } // 👈 We need the interface!
+	[Inject] public NavigationManager NavigationManager { get; set; } // Needed to navigate back to the home page after adding one successfully.
+	
+	private async Task CreateMaterialAsync()
+	{
+		await ms.CreateAsync(_index); // 👈 call the create function and pass the model through.
+		NavigationManager.NavigateTo(""); 
+	}
+}
+```
+
+#### Stap 3: Client - Service
+```cs
+public class MaterialService : IMaterialService
+
+{
+
+	private readonly HttpClient http;
+
+	private const string endpoint = "api/material";
+
+  
+
+	public MaterialService(HttpClient http)
+	{
+		this.http = http;
+	}
+
+	public async Task<int> CreateAsync(MaterialDto.Create model) // 👈 The create function should be implemented here. Already provided in this case, but make sure it's there!
+	{
+		var response = await http.PostAsJsonAsync<MaterialDto.Create>(endpoint, model);
+		return await response.Content.ReadFromJsonAsync<int>();
+	}
+
+// Rest of the code
+}
+```
+
+### Server
+#### Stap 4: Controller
+```cs
+namespace Server.Controllers
+{
+	[ApiController]
+	[Route("api/[controller]")]
+	public class MaterialController : ControllerBase
+	{
+		private readonly IMaterialService materialService; // We need this.
+  
+		public MaterialController(IMaterialService materialService)
+		{
+			this.materialService = materialService;
+		}
+  
+	[HttpGet]
+	public Task<IEnumerable<MaterialDto.Index>> GetIndex([FromQuery] string searchTerm)
+{
+		Console.WriteLine($"searchterm (backend): {searchTerm}");
+		return materialService.GetIndexAsync(searchTerm);
+}
+  
+	[HttpPost] // 👈 Make sure there's a post added in the controller.
+	public Task<int> CreateMaterial(MaterialDto.Create model)
+	{
+		return materialService.CreateAsync(model); // 👈 We get and pass through the model to the service layer.
+		}
+	}
+}
+```
+
+#### Stap 5: Startup (puur voor validation gedeelte)
+```cs
+public void ConfigureServices(IServiceCollection services)
+{
+	services.AddDbContext<ApplicationDbContext>(options =>
+		{
+			options.UseSqlServer(Configuration.GetConnectionString("SqlDatabase"));
+			options.EnableDetailedErrors();
+			options.EnableSensitiveDataLogging();
+});
+ 
+	services.AddScoped<IMaterialService, MaterialService>();
+  
+	services.AddControllersWithViews();
+  
+	services.AddValidatorsFromAssemblyContaining<MaterialDto.Create.Validator>(); // 👈 We need to add this in order for the validation to work properly.
+  
+	services.AddSwaggerGen(c =>
+		{
+			c.CustomSchemaIds(x => $"{x.DeclaringType.Name}.{x.Name}");
+			c.SwaggerDoc("v1", new OpenApiInfo { Title = "Examination API", Version = "v1" });
+		});
+	services.AddRazorPages();
+}
+```
+
+### Shared
+#### Stap 6: DTO
+```cs
+// MaterialDto.cs
+public static class MaterialDto
+{
+	public class Index // 👈 What the db will return.
+	{
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public string Description { get; set; }
+		public bool InStock { get; set; }
+	}
+  
+	public class Create // 👈 Used to create Materials.
+	{
+		public string Name { get; set; }
+		public string Description { get; set; }
+  
+ 
+		public class Validator : AbstractValidator<Create> // 👈 We introduce an inner class, a Validator that will validate user input on the form.
+		{
+			public Validator() // 👈 Constructor
+			{
+				RuleFor(x => x.Name).NotEmpty().MaximumLength(250); // 👈 Containing the rules for each field.
+				RuleFor(x => x.Description).MaximumLength(1000);
+			}
+		}
+	}
+}
+```
 ---
 ## Rest
 REpresentional State Transfer
@@ -1027,8 +1192,39 @@ internal classs OrderLineConfiguration : EntityConfiguration<OrderLine>{
 		.OnDelete(DeleteBehavior.Restrict)
 	}
 }
+```
+
+### Iets moet uniek zijn.
+Komende uit voorbeeldexamen.
+```cs
+// MaterialConfiguration.cs
+public class MaterialConfiguration : IEntityTypeConfiguration<Material>
+{
+	public void Configure(EntityTypeBuilder<Material> builder)
+	{
+		builder.ToTable(nameof(Material));
+  
+		builder.HasIndex(m => m.Name).IsUnique(); // 👈
+  
+		builder.Property(
+		m => m.Name
+		).IsRequired()
+		.HasMaxLength(250);
+  
+		builder.Property(
+		m => m.Description
+		).HasMaxLength(1000);
+  
+		// A Material has a history. A history consists of one or more events. When a material is removed, so should the history be. Cascade effect.
+		builder.HasMany(m => m.History).WithOne().IsRequired()
+		.OnDelete(DeleteBehavior.Cascade); // !! Caused crashes due to being indocrrent!
+		
+	}
+}
 
 ```
+- Aan de hand van `HasIndex()` kunnen we stellen dat Name uniek moet zijn.
+- We stellen hier ook in dat wanneer een item verwijderd wordt, de geschiedenis ervan ook verwijderd dient te worden in de database. => aanliggende/verbonden elementen verwijderen samen met het hoofdobject. Cascade effect.
 
 
 ### Tracking vs. No-tracking
