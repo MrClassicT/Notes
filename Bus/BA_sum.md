@@ -3,7 +3,7 @@
 |---|---|---|
 |[Eliciteren](#Eliciteren) |📘 [X] |🧠 [ ] |
 |[Documenteren](#Documenteren) |📘 [X] |🧠 [ ]|
-|- [[#User stories ontdekken\|User story spel]] |📘 [X] |🧠 [ ]|
+|- [User story spel](#User-stories-ontdekken) |📘 [X] |🧠 [ ]|
 |[Valideren](#Valideren) |📘 [X] |🧠 [ ]|
 |[Managen](#Managen) |📘 [X] |🧠 [ ]|
 |[Processen](#Processen) |📘 [X] |🧠 [ ]|
@@ -200,7 +200,7 @@ Story kan onderverdeeld worden in uitvoerbare taken.
 Geschreven door Devs en voor Devs, mag dus technisch zijn
 Input DevOps is van belang! Nodige hardware/systemen, beperkingen naar security toe.
 
-## User stories ontdekken 
+## User-stories-ontdekken 
 ### Customer Journey
 - Customer journey visualiseert de ervaring van de klant van begin tot einde aangaande doelen, fases, activiteiten, contactpunten en emoties. (komt ook voor in e-marketing!)
 - **Doel**: Inzicht krijgen in het gedrag van de klant. 
