@@ -10,7 +10,7 @@
 |[BPMN](#BPMN) |📘 [X] |🧠 [ ]|
 |- [[#Theorie slides\|Theorie slides]] |📘 [X] |🧠 [ ]|
 |- [[#Presentaties\|Presentaties]] |📘 [🤌] |🧠 [ ]|
-|[Workshop: Refleqt](#Workshop Refleqt) |📘 [X] |🧠 [ ]|
+|[Workshop: Refleqt](#Workshop-Refleqt) |📘 [X] |🧠 [ ]|
 
 ---
 # Eliciteren
@@ -905,7 +905,7 @@ Het is een geïntegreerde set van processen, tools en best practices die de leve
 
 
 ---
-# Workshop: Refleqt
+# Workshop-Refleqt
 **SDLC**: Software Development LifeCycle
 
 Waterval => Alles of niets, testen vormen een bottleneck omdat ze pas op het einde staan.
