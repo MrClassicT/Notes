@@ -8,8 +8,8 @@
 |[Managen](#Managen) |📘 [X] |🧠 [ ]|
 |[Processen](#Processen) |📘 [X] |🧠 [ ]|
 |[BPMN](#BPMN) |📘 [X] |🧠 [ ]|
-|- [[#Theorie slides\|Theorie slides]] |📘 [X] |🧠 [ ]|
-|- [[#Presentaties\|Presentaties]] |📘 [🤌] |🧠 [ ]|
+|- [Theorie slides](#Theorie-slides) |📘 [X] |🧠 [ ]|
+|- [Presentaties](#Presentaties) |📘 [🤌] |🧠 [ ]|
 |[Workshop: Refleqt](#Workshop-Refleqt) |📘 [X] |🧠 [ ]|
 
 ---
@@ -793,7 +793,7 @@ Het moedigt autonomie aan en probeert silo's tussen teams te verminderen, waardo
 
 ---
 # BPMN
-## Theorie slides
+## Theorie-slides
 ### Modelleren
 Doel: Reduceren van complexiteit
  - Moet 1 boodschap bevatten, duidelijk < 10 mins.
