@@ -1,9 +1,3 @@
----
-tags:
-  - Business
-date: 2024-01-15
----
-
 # Inhoud
 |Hoofdstuk|Samengevat  |Gekend         |
 |---|---|---|
@@ -16,7 +10,7 @@ date: 2024-01-15
 |[BPMN](#BPMN) |📘 [X] |🧠 [ ]|
 |- [[#Theorie slides\|Theorie slides]] |📘 [X] |🧠 [ ]|
 |- [[#Presentaties\|Presentaties]] |📘 [🤌] |🧠 [ ]|
-|[[#Workshop Refleqt\|Workshop: Refleqt]] |📘 [X] |🧠 [ ]|
+|[Workshop: Refleqt](#Workshop Refleqt) |📘 [X] |🧠 [ ]|
 
 ---
 # Eliciteren
