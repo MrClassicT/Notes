@@ -28,7 +28,7 @@
     - Tijd
     - Geld
     - Scope (Requirements)
--Succesvol:
+- Succesvol:
     - Testen (bewijzen van vereisten)
     - Contract
 
