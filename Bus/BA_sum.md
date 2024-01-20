@@ -12,6 +12,28 @@
 |- [Presentaties](#Presentaties) |📘 [🤌] |🧠 [ ]|
 |[Workshop: Refleqt](#Workshop-Refleqt) |📘 [X] |🧠 [ ]|
 
+
+---
+# Inleiding
+
+## Kwaliteitsvolle ICT projecten succesvol opleveren
+- Kwaliteitsvolle: 
+    - Functionele Requirements (use cases) (het vereist, wat moet er in mijn code zitten)
+    - Niet-functionele requirements (niet vereist maar je verwacht dit sws) (SMART)
+        App (als je dit alleen op IOS maakt en je klant heeft Android)
+- ICT:
+    - Hardware
+    - Software
+- Project:
+    - Tijd
+    - Geld
+    - Scope (Requirements)
+-Succesvol:
+    - Testen (bewijzen van vereisten)
+    - Contract
+
+> Met dank aan "paus_de_14e" voor deze input. :) 
+
 ---
 # Eliciteren
 > "Eliciteren betekent informatie, reacties of emoties doelgericht opwekken of verkrijgen, vaak door gerichte vragen of handelingen."
