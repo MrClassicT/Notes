@@ -96,7 +96,7 @@
 			- Gesloten vragen
 				- Enkel ter verduidelijking.
 	- Uitvoering:
-		- Ban opbouwen, verwachtingen stellen, juiste vragen stellen op correcte manier, actief luisteren, notuleren en afsluiten interview.
+		- Band opbouwen, verwachtingen stellen, juiste vragen stellen op correcte manier, actief luisteren, notuleren en afsluiten interview.
 		- Zoek wat nodig is, niet enkel wat er gewenst is.
 	- Follow-up:
 		- Formele bedanking, nota's review, acties opstellen.
